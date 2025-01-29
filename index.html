@@ -13,17 +13,10 @@
 <body>
     <h2>Calculadora de Nomenclatura</h2>
     
-    <label for="tipo">Tipo de Criativo:</label>
-    <select id="tipo">
-        <option value="estatico">Estático</option>
-        <option value="carrossel">Carrossel</option>
-    </select>
-    
-    <label for="quantidade">Quantidade de Criativos Distintos:</label>
-    <input type="number" id="quantidade" min="1" value="1">
-    
-    <label for="telas" id="labelTelas" style="display: none;">Quantidade de Telas por Carrossel:</label>
-    <input type="number" id="telas" min="2" value="5" style="display: none;">
+    <div id="criativos-container">
+        <label>Adicionar Tipo de Criativo:</label>
+        <button onclick="adicionarCriativo()">+ Adicionar Criativo</button>
+    </div>
     
     <label>Formatos Desejados:</label>
     <input type="checkbox" class="formato" value="feed" checked> Feed (1080x1080)<br>
@@ -31,34 +24,65 @@
     <input type="checkbox" class="formato" value="1200x628"> 1200x628<br>
     <input type="checkbox" class="formato" value="1200x1500"> 1200x1500<br>
     
+    <label for="outrosFormatos">Outros Formatos (separados por vírgula ex: 600x600, 800x800):</label>
+    <input type="text" id="outrosFormatos">
+    
     <button onclick="calcularNomenclatura()">Calcular</button>
     <p class="resultado" id="resultado"></p>
     
     <script>
-        document.getElementById("tipo").addEventListener("change", function() {
-            let tipo = this.value;
-            let labelTelas = document.getElementById("labelTelas");
-            let inputTelas = document.getElementById("telas");
-            if (tipo === "carrossel") {
-                labelTelas.style.display = "block";
-                inputTelas.style.display = "block";
-            } else {
-                labelTelas.style.display = "none";
-                inputTelas.style.display = "none";
-            }
-        });
-
+        function adicionarCriativo() {
+            let container = document.getElementById("criativos-container");
+            let div = document.createElement("div");
+            div.classList.add("criativo-item");
+            div.innerHTML = `
+                <select class="tipo">
+                    <option value="estatico">Estático</option>
+                    <option value="carrossel">Carrossel</option>
+                    <option value="motion">Motion</option>
+                </select>
+                <input type="number" class="quantidade" min="1" value="1"> Quantidade
+                <input type="number" class="telas" min="2" value="5" style="display: none;"> Telas (Carrossel)
+                <button onclick="removerCriativo(this)">Remover</button>
+            `;
+            container.appendChild(div);
+            atualizarVisibilidadeTelas();
+        }
+        
+        function removerCriativo(button) {
+            button.parentElement.remove();
+        }
+        
+        function atualizarVisibilidadeTelas() {
+            document.querySelectorAll(".tipo").forEach(select => {
+                select.addEventListener("change", function() {
+                    let telasInput = this.nextElementSibling.nextElementSibling;
+                    if (this.value === "carrossel") {
+                        telasInput.style.display = "inline";
+                    } else {
+                        telasInput.style.display = "none";
+                    }
+                });
+            });
+        }
+        
         function calcularNomenclatura() {
-            let tipo = document.getElementById("tipo").value;
-            let quantidade = parseInt(document.getElementById("quantidade").value);
-            let telas = parseInt(document.getElementById("telas").value);
+            let criativos = document.querySelectorAll(".criativo-item");
             let formatos = document.querySelectorAll(".formato:checked").length;
+            let outrosFormatos = document.getElementById("outrosFormatos").value.split(",").filter(f => f.trim() !== "").length;
+            let totalFormatos = formatos + outrosFormatos;
             
-            let numeroCriativos = tipo === "carrossel" ? quantidade : quantidade;
-            let numeroDesdobramentos = numeroCriativos * formatos;
+            let numeroCriativos = 0;
+            criativos.forEach(criativo => {
+                let tipo = criativo.querySelector(".tipo").value;
+                let quantidade = parseInt(criativo.querySelector(".quantidade").value);
+                numeroCriativos += quantidade;
+            });
             
+            let numeroDesdobramentos = numeroCriativos * totalFormatos;
             document.getElementById("resultado").innerText = `Nomenclatura: [${numeroCriativos}x${numeroDesdobramentos}]`;
         }
     </script>
 </body>
 </html>
+
