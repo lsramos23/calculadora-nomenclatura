@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Nomenclatura</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        label, input, select { display: block; margin: 10px 0; }
+        .resultado { font-weight: bold; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h2>Calculadora de Nomenclatura</h2>
+    
+    <label for="tipo">Tipo de Criativo:</label>
+    <select id="tipo">
+        <option value="estatico">Estático</option>
+        <option value="carrossel">Carrossel</option>
+    </select>
+    
+    <label for="quantidade">Quantidade de Criativos Distintos:</label>
+    <input type="number" id="quantidade" min="1" value="1">
+    
+    <label for="telas" id="labelTelas" style="display: none;">Quantidade de Telas por Carrossel:</label>
+    <input type="number" id="telas" min="2" value="5" style="display: none;">
+    
+    <label>Formatos Desejados:</label>
+    <input type="checkbox" class="formato" value="feed" checked> Feed (1080x1080)<br>
+    <input type="checkbox" class="formato" value="story"> Story (1080x1920)<br>
+    <input type="checkbox" class="formato" value="1200x628"> 1200x628<br>
+    <input type="checkbox" class="formato" value="1200x1500"> 1200x1500<br>
+    
+    <button onclick="calcularNomenclatura()">Calcular</button>
+    <p class="resultado" id="resultado"></p>
+    
+    <script>
+        document.getElementById("tipo").addEventListener("change", function() {
+            let tipo = this.value;
+            let labelTelas = document.getElementById("labelTelas");
+            let inputTelas = document.getElementById("telas");
+            if (tipo === "carrossel") {
+                labelTelas.style.display = "block";
+                inputTelas.style.display = "block";
+            } else {
+                labelTelas.style.display = "none";
+                inputTelas.style.display = "none";
+            }
+        });
+
+        function calcularNomenclatura() {
+            let tipo = document.getElementById("tipo").value;
+            let quantidade = parseInt(document.getElementById("quantidade").value);
+            let telas = parseInt(document.getElementById("telas").value);
+            let formatos = document.querySelectorAll(".formato:checked").length;
+            
+            let numeroCriativos = tipo === "carrossel" ? quantidade : quantidade;
+            let numeroDesdobramentos = numeroCriativos * formatos;
+            
+            document.getElementById("resultado").innerText = `Nomenclatura: [${numeroCriativos}x${numeroDesdobramentos}]`;
+        }
+    </script>
+</body>
+</html>
