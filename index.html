@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<<!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
@@ -18,20 +18,78 @@
         .container {
             text-align: center;
             background: rgba(255, 255, 255, 0.1);
-            padding: 20px;
-            border-radius: 10px;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            width: 100%;
         }
-        label, input, select { display: block; margin: 10px auto; }
-        .resultado { font-weight: bold; margin-top: 20px; }
-        button { margin-top: 10px; padding: 10px; cursor: pointer; }
-        img { max-width: 200px; margin-bottom: 20px; }
+        label, input, select {
+            display: block;
+            margin: 10px auto;
+            width: 80%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        .resultado {
+            font-weight: bold;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        img {
+            max-width: 200px;
+            margin-bottom: 20px;
+        }
+        .criativo-item {
+            margin-bottom: 15px;
+        }
+        .criativo-item select, .criativo-item input {
+            display: inline-block;
+            width: auto;
+            margin: 5px;
+        }
+        .criativo-item button {
+            background-color: #dc3545;
+        }
+        .criativo-item button:hover {
+            background-color: #c82333;
+        }
+        .formato {
+            margin: 5px;
+        }
+        .formato-label {
+            display: inline-block;
+            margin: 5px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h2>Calculadora de Nomenclatura</h2>
         <img src="Boomer-Logo-Modelo-1.png" alt="Logo Boomer">
-        <p>Use esta calculadora para definir corretamente a nomenclatura das demandas. Selecione os tipos de criativos desejados, informe as quantidades e adicione os formatos necessários. O sistema calculará automaticamente a nomenclatura no formato [Número de Criativos x Número de Desdobramentos]. Clique no botão "Copiar Resultado" para facilitar o uso.</p>
+        <p>Use esta calculadora para definir corretamente a nomenclatura das demandas.<br>
+        Selecione os tipos de criativos desejados, informe as quantidades<br>
+        e adicione os formatos necessários. O sistema calculará automaticamente<br>
+        a nomenclatura no formato [Número de Criativos x Número de Desdobramentos].<br>
+        Clique no botão "Copiar Resultado" para facilitar o uso.</p>
         
         <div id="criativos-container">
             <label>Adicionar Tipo de Criativo:</label>
@@ -39,10 +97,12 @@
         </div>
         
         <label>Formatos Desejados:</label>
-        <input type="checkbox" class="formato" value="feed" checked> Feed (1080x1080)<br>
-        <input type="checkbox" class="formato" value="story"> Story (1080x1920)<br>
-        <input type="checkbox" class="formato" value="1200x628"> 1200x628<br>
-        <input type="checkbox" class="formato" value="1200x1500"> 1200x1500<br>
+        <div>
+            <label class="formato-label"><input type="checkbox" class="formato" value="feed" checked> Feed (1080x1080)</label><br>
+            <label class="formato-label"><input type="checkbox" class="formato" value="story"> Story (1080x1920)</label><br>
+            <label class="formato-label"><input type="checkbox" class="formato" value="1200x628"> 1200x628</label><br>
+            <label class="formato-label"><input type="checkbox" class="formato" value="1200x1500"> 1200x1500</label><br>
+        </div>
         
         <label for="outrosFormatos">Outros Formatos (separados por vírgula ex: 600x600, 800x800):</label>
         <input type="text" id="outrosFormatos">
