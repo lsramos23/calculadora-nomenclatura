@@ -5,30 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora de Nomenclatura</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        label, input, select { display: block; margin: 10px 0; }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #002350;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+        }
+        label, input, select { display: block; margin: 10px auto; }
         .resultado { font-weight: bold; margin-top: 20px; }
+        button { margin-top: 10px; padding: 10px; cursor: pointer; }
+        img { max-width: 200px; margin-bottom: 20px; }
     </style>
 </head>
 <body>
-    <h2>Calculadora de Nomenclatura</h2>
-    
-    <div id="criativos-container">
-        <label>Adicionar Tipo de Criativo:</label>
-        <button onclick="adicionarCriativo()">+ Adicionar Criativo</button>
+    <div class="container">
+        <h2>Calculadora de Nomenclatura</h2>
+        <img src="Boomer-Logo-Modelo-1.png" alt="Logo Boomer">
+        
+        <div id="criativos-container">
+            <label>Adicionar Tipo de Criativo:</label>
+            <button onclick="adicionarCriativo()">+ Adicionar Criativo</button>
+        </div>
+        
+        <label>Formatos Desejados:</label>
+        <input type="checkbox" class="formato" value="feed" checked> Feed (1080x1080)<br>
+        <input type="checkbox" class="formato" value="story"> Story (1080x1920)<br>
+        <input type="checkbox" class="formato" value="1200x628"> 1200x628<br>
+        <input type="checkbox" class="formato" value="1200x1500"> 1200x1500<br>
+        
+        <label for="outrosFormatos">Outros Formatos (separados por vírgula ex: 600x600, 800x800):</label>
+        <input type="text" id="outrosFormatos">
+        
+        <button onclick="calcularNomenclatura()">Calcular</button>
+        <p class="resultado" id="resultado"></p>
+        <button onclick="copiarResultado()">Copiar Resultado</button>
     </div>
-    
-    <label>Formatos Desejados:</label>
-    <input type="checkbox" class="formato" value="feed" checked> Feed (1080x1080)<br>
-    <input type="checkbox" class="formato" value="story"> Story (1080x1920)<br>
-    <input type="checkbox" class="formato" value="1200x628"> 1200x628<br>
-    <input type="checkbox" class="formato" value="1200x1500"> 1200x1500<br>
-    
-    <label for="outrosFormatos">Outros Formatos (separados por vírgula ex: 600x600, 800x800):</label>
-    <input type="text" id="outrosFormatos">
-    
-    <button onclick="calcularNomenclatura()">Calcular</button>
-    <p class="resultado" id="resultado"></p>
     
     <script>
         function adicionarCriativo() {
@@ -82,7 +103,13 @@
             let numeroDesdobramentos = numeroCriativos * totalFormatos;
             document.getElementById("resultado").innerText = `Nomenclatura: [${numeroCriativos}x${numeroDesdobramentos}]`;
         }
+        
+        function copiarResultado() {
+            let resultado = document.getElementById("resultado").innerText;
+            navigator.clipboard.writeText(resultado).then(() => {
+                alert("Resultado copiado!");
+            });
+        }
     </script>
 </body>
 </html>
-
